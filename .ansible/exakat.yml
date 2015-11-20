@@ -1,0 +1,7 @@
+---
+- name: Setup exakat
+  hosts: all
+  sudo: yes
+  roles:
+    - exakat
+
