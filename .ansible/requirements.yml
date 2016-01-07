@@ -1,0 +1,3 @@
+---
+- src: git@github.com:kbrebanov/ansible-neo4j.git
+  scm: git
