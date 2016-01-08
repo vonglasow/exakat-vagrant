@@ -1,22 +1,5 @@
 ---
-#- name: add java repository
-#  apt_repository: repo='deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main' state=present
-#
-#- name: add java src repository
-#  apt_repository: repo='deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu precise main' state=present
-#
-#- name: add java key repository
-#  apt_key: id=EEA14886 keyserver=keyserver.ubuntu.com state=present
-#
-#- name: Accept Java 8 Licence
-#  shell: echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | tee /etc/oracle-java-8-licence-acceptance | /usr/bin/debconf-set-selections
-#  args:
-#    creates: /etc/oracle-java-8-licence-acceptance
-
 - apt: update_cache=yes
-
-#- name: downlad neo4j
-#  get_url: url=http://dist.neo4j.org/neo4j-community-2.2.7-unix.tar.gz dest=/home/vagrant/neo4j.tar.gz mode=0750
 
 # Common configurations to be run on all hosts
 - name: Install default packages
@@ -63,19 +46,8 @@
   - python-software-properties
   - libxpm-dev
   - unixodbc-dev
-  - oracle-java8-installer
   - ca-certificates
-  - oracle-java8-set-default
     #- libt1-dev
   tags:
     - apt
 
-#- name: untar neo4j
-#  shell: tar -xvf /home/vagrant/neo4j.tar.gz
-#
-#- name: move neo4j
-#  shell: mv neo4j-community-2.2.7 neo4j
-#
-#- name: clone gremlin neo4j
-#  git: repo=https://github.com/thinkaurelius/neo4j-gremlin-plugin.git dest=/home/vagrant/neo4j-gremlin-plugin
-#

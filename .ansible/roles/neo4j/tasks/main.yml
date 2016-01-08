@@ -1,0 +1,15 @@
+---
+- apt: update_cache=yes
+
+- name: downlad neo4j
+  get_url: url=http://dist.neo4j.org/neo4j-community-2.2.7-unix.tar.gz dest=/home/vagrant/neo4j.tar.gz mode=0750
+
+- name: untar neo4j
+  shell: tar -xvf /home/vagrant/neo4j.tar.gz
+
+- name: move neo4j
+  shell: mv neo4j-community-2.2.7 neo4j
+
+- name: clone gremlin neo4j
+  git: repo=https://github.com/thinkaurelius/neo4j-gremlin-plugin.git dest=/home/vagrant/neo4j-gremlin-plugin
+

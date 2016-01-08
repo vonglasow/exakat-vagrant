@@ -4,5 +4,7 @@
   sudo: yes
   roles:
     - exakat
+    - java8
     - neo4j
+    - php
 
