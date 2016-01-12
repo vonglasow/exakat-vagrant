@@ -10,11 +10,42 @@
     - gcc
     - make
     - libc-dev
-    - bison
     - libtool
     - re2c
     - autoconf
     - automake
   tags:
     - apt
+
+- name: download file and force basic auth
+  get_url: url=http://launchpadlibrarian.net/140087283/libbison-dev_2.7.1.dfsg-1_amd64.deb dest=/opt/
+  sudo: yes
+
+- name: download file and force basic auth
+  get_url: url=http://launchpadlibrarian.net/140087282/bison_2.7.1.dfsg-1_amd64.deb dest=/opt/
+  sudo: yes
+
+- name: Install libbison
+  apt: deb=/opt/libbison-dev_2.7.1.dfsg-1_amd64.deb
+  sudo: yes
+
+- name: Install bison
+  apt: deb=/opt/bison_2.7.1.dfsg-1_amd64.deb
+  sudo: yes
+
+- name: Creates directory
+  file: path={{item}} state=directory owner=vagrant group=vagrant
+  with_items:
+    - /opt/source
+    - /opt/php-5.3
+    - /opt/php-5.4
+    - /opt/php-5.5
+    - /opt/php-5.6
+    - /opt/php-7.0
+    - /opt/php-7.1
+    - /opt/source/php-src
+  sudo: yes
+
+- name: clone php-src
+  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src
 
