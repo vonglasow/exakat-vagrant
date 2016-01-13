@@ -37,13 +37,6 @@
 - name: Creates directory
   file: path={{item}} state=directory owner=vagrant group=vagrant
   with_items:
-    - /opt/source
-    - /opt/php-5.3
-    - /opt/php-5.4
-    - /opt/php-5.5
-    - /opt/php-5.6
-    - /opt/php-7.0
-    - /opt/php-7.1
     - /opt/source/php-src
   sudo: yes
 
