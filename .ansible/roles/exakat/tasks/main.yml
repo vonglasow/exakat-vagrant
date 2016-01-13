@@ -20,7 +20,6 @@
   - libxml2-dev
   - autoconf
   - re2c
-  - bison
   - screen
   - php5-curl
   - php5-sqlite
