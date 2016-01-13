@@ -7,9 +7,25 @@
 - name: untar neo4j
   shell: tar -xvf /home/vagrant/neo4j.tar.gz
 
+- name: clean neo4j
+  shell: rm -rf neo4j
+
 - name: move neo4j
   shell: mv neo4j-community-2.2.7 neo4j
 
 - name: clone gremlin neo4j
   git: repo=https://github.com/thinkaurelius/neo4j-gremlin-plugin.git dest=/home/vagrant/neo4j-gremlin-plugin
 
+- name: Install default packages
+  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items:
+    - maven
+
+- name: stop neo4j
+  shell: cd /home/vagrant/neo4j; ./bin/neo4j stop
+
+- name: build gremlin 2.0
+  shell: cd /home/vagrant/neo4j-gremlin-plugin; mvn clean package; unzip target/neo4j-gremlin-plugin-*-server-plugin.zip -d /home/vagrant/neo4j/plugins/gremlin-plugin; /home/vagrant/neo4j/bin/neo4j restart
+
+- name: configure neo4j for gremlin 2.0
+  lineinfile: dest=/home/vagrant/neo4j/conf/neo4j-server.properties regexp="^#org.neo4j.server.thirdparty_jaxrs_classes=org.neo4j.examples.server.unmanaged=/examples/unmanaged" insertafter="^#org.neo4j.server.thirdparty_jaxrs_classes=org.neo4j.examples.server.unmanaged=/examples/unmanaged" line="org.neo4j.server.thirdparty_jaxrs_classes=com.thinkaurelius.neo4j.plugins=/tp\n"
