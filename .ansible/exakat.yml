@@ -3,8 +3,8 @@
   hosts: all
   sudo: yes
   roles:
-    - exakat
+    - php
     - java8
     - neo4j
-    - php
+    - exakat
 
