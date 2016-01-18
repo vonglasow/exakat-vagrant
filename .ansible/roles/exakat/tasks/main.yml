@@ -2,51 +2,13 @@
 - apt: update_cache=yes
 
 # Common configurations to be run on all hosts
-- name: Install default packages
-  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
-  with_items:
-  - silversearcher-ag
-  - tree
-  - vim
-  - git
-  - php5-cli
-  - zip
-  - wkhtmltopdf
-  - maven
-  - php5-mysqlnd
-  - sqlite
-  - gcc
-  - make
-  - libxml2-dev
-  - autoconf
-  - re2c
-  - screen
-  - php5-curl
-  - php5-sqlite
-  - libssl-dev
-  - libcurl4-openssl-dev
-  - pkg-config
-  - libbz2-dev
-  - libjpeg-dev
-  - libpng-dev
-  - libfreetype6-dev
-  - libgmp3-dev
-  - libldap2-dev
-  - libmcrypt-dev
-  - libmhash-dev
-  - freetds-dev
-  - libz-dev
-  - ncurses-dev
-  - libpcre3-dev
-  - libsqlite-dev
-  - libaspell-dev
-  - libreadline6-dev
-  - librecode-dev
-  - python-software-properties
-  - libxpm-dev
-  - unixodbc-dev
-  - ca-certificates
-    #- libt1-dev
-  tags:
-    - apt
+- name: clean exakat
+  shell: rm -f exakat.phar
 
+- name: download exakat
+  get_url: url=http://dist.exakat.io/versions/index.php?file=exakat-0.4.4.phar dest=/home/vagrant/exakat.phar mode=0777
+ 
+- name: test exakat
+  shell: php exakat.phar doctor
+
+## Still needs to modify the config/config.ini file
