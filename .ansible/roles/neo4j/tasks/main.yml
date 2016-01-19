@@ -4,24 +4,40 @@
   with_items:
     - git
     - maven
+  tags:
+    - neo4j
 
 - name: downlad neo4j
   get_url: url=http://dist.neo4j.org/neo4j-community-2.2.7-unix.tar.gz dest=/home/vagrant/neo4j.tar.gz mode=0750
+  tags:
+    - neo4j
 
 - name: untar neo4j
-  unarchive: src=/home/vagrant/neo4j.tar.gz dest=/home/vagrant/neo4j
+  unarchive: src=/home/vagrant/neo4j.tar.gz dest=/home/vagrant copy=no
+  tags:
+    - neo4j
 
 - name: rename neo4j
   shell: mv neo4j-community-2.2.7 neo4j
+  tags:
+    - neo4j
 
 - name: clone gremlin neo4j
   git: repo=https://github.com/thinkaurelius/neo4j-gremlin-plugin.git dest=/home/vagrant/neo4j-gremlin-plugin
+  tags:
+    - neo4j
 
 - name: configure neo4j for gremlin 2.0
   lineinfile: dest=/home/vagrant/neo4j/conf/neo4j-server.properties regexp="^#org.neo4j.server.thirdparty_jaxrs_classes=org.neo4j.examples.server.unmanaged=/examples/unmanaged" insertafter="^#org.neo4j.server.thirdparty_jaxrs_classes=org.neo4j.examples.server.unmanaged=/examples/unmanaged" line="org.neo4j.server.thirdparty_jaxrs_classes=com.thinkaurelius.neo4j.plugins=/tp\n"
+  tags:
+    - neo4j
 
 - name: build gremlin 2.0
   shell: cd /home/vagrant/neo4j-gremlin-plugin; mvn clean package; unzip target/neo4j-gremlin-plugin-*-server-plugin.zip -d /home/vagrant/neo4j/plugins/gremlin-plugin
+  tags:
+    - neo4j
 
 - name: restart neo4j for gremlin
   shell: cd /home/vagrant/neo4j; ./bin/neo4j restart
+  tags:
+    - neo4j
