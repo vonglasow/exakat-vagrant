@@ -3,12 +3,40 @@
 
 # Common configurations to be run on all hosts
 - name: clean exakat
-  shell: rm -f exakat.phar
+  file: path=/home/vagrant/exakat.phar state=absent
+
+- name: clean exakat old config
+  file: path=/home/vagrant/config state=absent
 
 - name: download exakat
   get_url: url=http://dist.exakat.io/versions/index.php?file=exakat-0.4.4.phar dest=/home/vagrant/exakat.phar mode=0777
  
 - name: test exakat
   shell: php exakat.phar doctor
+
+- name: test exakat-PHP
+  lineinfile: dest=/home/vagrant/config/config.ini regexp="php          = "= line="php          = /usr/local/bin/php70"
+
+- name: test exakat-PHP 7.1
+  lineinfile: dest=/home/vagrant/config/config.ini regexp=";php71        = /path/to/php71"= line="php71        = /usr/local/bin/php71"
+
+- name: test exakat-PHP 7.0
+  lineinfile: dest=/home/vagrant/config/config.ini regexp=";php70        = /path/to/php70"= line="php70        = /usr/local/bin/php70"
+
+- name: test exakat-PHP 5.6
+  lineinfile: dest=/home/vagrant/config/config.ini regexp=";php56        = /path/to/php56"= line="php56        = /usr/local/bin/php56"
+
+- name: test exakat-PHP 5.5
+  lineinfile: dest=/home/vagrant/config/config.ini regexp=";php55        = /path/to/php55"= line="php55        = /usr/local/bin/php55"
+
+- name: test exakat-PHP 5.6
+  lineinfile: dest=/home/vagrant/config/config.ini regexp=";php54        = /path/to/php56"= line="php54        = /usr/local/bin/php54"
+
+- name: stop neo4j
+  shell: cd neo4j/; ./bin/neo4j stop
+  
+- name: control over neo4j
+  file: path=/home/vagrant/ recurse=yes owner=vagrant
+
 
 ## Still needs to modify the config/config.ini file
