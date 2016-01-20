@@ -4,6 +4,7 @@
   with_items:
     - git
     - maven
+    - unzip
   tags:
     - neo4j
 
@@ -32,10 +33,19 @@
   tags:
     - neo4j
 
+- name: stop neo4j
+  shell: cd /home/vagrant/neo4j; ./bin/neo4j stop
+
 - name: build gremlin 2.0
-  shell: cd /home/vagrant/neo4j-gremlin-plugin; mvn clean package; unzip target/neo4j-gremlin-plugin-*-server-plugin.zip -d /home/vagrant/neo4j/plugins/gremlin-plugin
+  shell: cd /home/vagrant/neo4j-gremlin-plugin; mvn clean package
   tags:
     - neo4j
+
+- name: create gremlin directory
+  file: path=/home/vagrant/neo4j/plugins/gremlin-plugin state=directory mode=0755
+
+- name: Dezippe gremlin
+  unarchive: src=/home/vagrant/neo4j-gremlin-plugin/target/neo4j-gremlin-plugin-tp2-2.3.1-server-plugin.zip dest=/home/vagrant/neo4j/plugins/gremlin-plugin/ copy=no
 
 - name: restart neo4j for gremlin
   shell: cd /home/vagrant/neo4j; ./bin/neo4j restart

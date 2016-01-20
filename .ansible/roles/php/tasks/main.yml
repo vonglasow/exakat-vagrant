@@ -15,6 +15,10 @@
     - autoconf
     - automake
     - git
+    - curl 
+    - libcurl3
+    - libcurl3-dev 
+    - php5-curl
   tags:
     - apt
     - php
@@ -62,7 +66,7 @@
     - php
 
 - name: build PHP 7.1
-  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-7.1" --with-config-file-path="/usr/local/etc/php-7.1" --enable-mbstring --enable-tokenizer --enable-phar --with-sqlite3 --enable-json --disable-all; make ; make install
+  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-7.1" --with-config-file-path="/usr/local/etc/php-7.1" --enable-mbstring --enable-tokenizer --with-curl=/usr --enable-phar --with-sqlite3 --enable-json --disable-all; make ; make install
   tags:
     - php
 
@@ -72,12 +76,12 @@
     - php
 
 - name: checkout PHP 7.0
-  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=php-7.0.0 clone=no force=yes
+  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=php-7.0.1 clone=no force=yes
   tags:
     - php
 
 - name: build PHP 7.0
-  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-7.0" --with-config-file-path="/usr/local/etc/php-7.0" --enable-mbstring --enable-tokenizer --enable-phar --with-sqlite3 --enable-json --disable-all; make ; make install
+  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-7.0" --with-config-file-path="/usr/local/etc/php-7.0" --enable-mbstring --enable-tokenizer  --with-curl=/usr --enable-phar --with-sqlite3 --enable-json --disable-all; make ; make install
   tags:
     - php
 
@@ -122,6 +126,6 @@
     - php
 
 - name: clean php-src
-  shell: rm -rf /opt/source/php-src
+  file: path=/opt/source/php-src state=absent
   tags:
     - php
