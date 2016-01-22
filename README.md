@@ -32,4 +32,4 @@ More details
 Author
 ------
 
-This repoistory is the brain child of [Alexis Van Glasow](https://github.com/vonglasow), with the help of contributor. 
+This repository is the brain child of [Alexis Van Glasow](https://github.com/vonglasow), with the help of contributor. 
