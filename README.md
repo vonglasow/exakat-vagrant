@@ -1,11 +1,35 @@
 Exakat-vagrant
 ==============
 
-Role to build a vagrant with exakat and all dependencies installed
+Builds a vagrant with [exakat](http://www.exakat.io/) and all dependencies installed.
 
-It should be separated in different role.
+How do I use it?
+----------------
 
-- PHP role to install all version required with different path (php5.2 php5.3 php5.4 php5.5 php5.6 php7 php7.1 etc…)
-- Neo4j role is taking from ansible-galaxy (need to see if the installation is ok)
-- Gremlins role to complete neo4j
+Make sure you have all pre-requisite
 
+* Ansible
+* Vagrant
+* Git
+
+
+Then : 
+
+::
+   
+    git clone https://github.com/dseguy/exakat-vagrant.git exakat-vagrant
+    cd exakat-vagrant
+    vagrant up --provision
+    
+More details
+------------
+
+* PHP binary for exakat execution (PHP with curl, tokenizer and sqlite3).
+* PHP5.2 PHP5.3 PHP5.4 PHP5.5 PHP5.6 PHP7.0 and PHP7.1 for exakat analysis
+* Neo4j 2.2.7 and gremlin 2.0 plugin, running on Java 8
+
+
+Author
+------
+
+This repoistory is the brain child of [Alexis Van Glasow](https://github.com/vonglasow), with the help of contributor. 
