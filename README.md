@@ -13,14 +13,14 @@ Make sure you have all pre-requisite
 * Git
 
 
-Then : 
+Then :
 
 ::
-   
+
     git clone https://github.com/dseguy/exakat-vagrant.git exakat-vagrant
     cd exakat-vagrant
     vagrant up --provision
-    
+
 More details
 ------------
 
@@ -32,4 +32,4 @@ More details
 Author
 ------
 
-This repository is the brain child of [Alexis Van Glasow](https://github.com/vonglasow), with the help of contributor. 
+This repository is the brain child of [Alexis von Glasow](https://github.com/vonglasow), with the help of contributor.
