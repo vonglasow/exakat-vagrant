@@ -19,7 +19,7 @@ Then :
 
     git clone https://github.com/dseguy/exakat-vagrant.git exakat-vagrant
     cd exakat-vagrant
-    vagrant up --provision
+    vagrant up
 
 More details
 ------------
