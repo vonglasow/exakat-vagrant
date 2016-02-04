@@ -10,26 +10,29 @@ Make sure you have all pre-requisite
 
 * Ansible
 * Vagrant
+* Virtualbox
 * Git
 
 
 Then :
 
-::
-
-    git clone https://github.com/dseguy/exakat-vagrant.git exakat-vagrant
+    git clone https://github.com/exakat/exakat-vagrant.git exakat-vagrant
     cd exakat-vagrant
-    vagrant up
+    // Check for the Vagrant files to adapt it to your configuration
+    vagrant up --provision
 
 More details
 ------------
 
 * PHP binary for exakat execution (PHP with curl, tokenizer and sqlite3).
-* PHP5.2 PHP5.3 PHP5.4 PHP5.5 PHP5.6 PHP7.0 and PHP7.1 for exakat analysis
+* PHP 7.1-dev (master), 7.0, 5.6, 5.5 for exakat analysis
 * Neo4j 2.2.7 and gremlin 2.0 plugin, running on Java 8
 
+This box is sized to handle projects up to 100k LOC of PHP. Larger projects do require more RAM and adaptation in config/config.ini.
+
+The ansible playbook may be used independantly to install exakat only : see role ['exakat'](https://github.com/exakat/exakat-vagrant/blob/master/.ansible/roles/exakat/tasks/main.yml).
 
 Author
 ------
 
-This repository is the brain child of [Alexis von Glasow](https://github.com/vonglasow), with the help of contributor.
+This repository is the brain child of [Alexis von Glasow](https://github.com/vonglasow), with the help of contributors.
