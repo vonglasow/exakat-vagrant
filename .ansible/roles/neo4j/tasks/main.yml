@@ -22,7 +22,7 @@
     - neo4j
 
 - name: Rename neo4j distribution to neo4j
-  shell: mv neo4j-community-2.2.7 neo4j
+  shell: mv /home/vagrant/neo4j-community-2.2.7 /home/vagrant/neo4j
   tags:
     - neo4j
 

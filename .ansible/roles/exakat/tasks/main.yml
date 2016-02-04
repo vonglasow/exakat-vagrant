@@ -15,12 +15,12 @@
     - exakat
 
 - name: download exakat
-  get_url: url=http://dist.exakat.io/versions/index.php?file=exakat-0.4.4.phar dest=/home/vagrant/exakat.phar mode=0777
+  get_url: url=http://dist.exakat.io/versions/index.php?file=latest dest=/home/vagrant/exakat.phar mode=0777
   tags:
     - exakat
  
 - name: test exakat
-  shell: php exakat.phar doctor
+  shell: php /home/vagrant/exakat.phar doctor
   tags:
     - exakat
 
@@ -55,7 +55,7 @@
     - exakat
 
 - name: stop neo4j
-  shell: cd neo4j/; ./bin/neo4j stop
+  shell: cd /home/vagrant/neo4j/; ./bin/neo4j stop
   tags:
     - exakat
 
