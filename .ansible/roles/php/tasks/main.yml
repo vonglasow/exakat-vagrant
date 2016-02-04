@@ -1,6 +1,8 @@
 ---
 # tasks file for php
 - apt: update_cache=yes
+  tags:
+    - php
 
 # Common configurations to be run on all hosts
 # http://www.sitepoint.com/run-multiple-versions-php-one-server/
