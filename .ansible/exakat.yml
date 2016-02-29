@@ -1,7 +1,7 @@
 ---
 - name: Setup exakat
   hosts: all
-  sudo: yes
+  become: yes
   roles:
     - php
     - java8
