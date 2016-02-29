@@ -83,7 +83,7 @@
     - php
 
 - name: build PHP 7.0
-  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-7.0" --with-config-file-path="/usr/local/etc/php-7.0" --enable-mbstring --enable-tokenizer  --with-curl=/usr --enable-phar --with-sqlite3 --enable-json --disable-all; make ; make install
+  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-7.0" --with-config-file-path="/usr/local/etc/php-7.0" --enable-mbstring --enable-tokenizer  --with-curl=/usr --enable-phar --with-sqlite3 --enable-json --enable-hash --disable-all; make ; make install
   tags:
     - php
 
