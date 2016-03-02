@@ -27,25 +27,25 @@
 
 - name: download file and force basic auth
   get_url: url=http://launchpadlibrarian.net/140087283/libbison-dev_2.7.1.dfsg-1_amd64.deb dest=/opt/
-  sudo: yes
+  become: yes
   tags:
     - php
 
 - name: download file and force basic auth
   get_url: url=http://launchpadlibrarian.net/140087282/bison_2.7.1.dfsg-1_amd64.deb dest=/opt/
-  sudo: yes
+  become: yes
   tags:
     - php
 
 - name: Install libbison
   apt: deb=/opt/libbison-dev_2.7.1.dfsg-1_amd64.deb
-  sudo: yes
+  become: yes
   tags:
     - php
 
 - name: Install bison
   apt: deb=/opt/bison_2.7.1.dfsg-1_amd64.deb
-  sudo: yes
+  become: yes
   tags:
     - php
 
@@ -53,7 +53,7 @@
   file: path={{item}} state=directory owner=vagrant group=vagrant
   with_items:
     - /opt/source/php-src
-  sudo: yes
+  become: yes
   tags:
     - php
 
