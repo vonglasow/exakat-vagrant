@@ -78,7 +78,7 @@
     - php
 
 - name: checkout PHP 7.0
-  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=php-7.0.1 clone=no force=yes
+  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=php-7.0.4 clone=no force=yes
   tags:
     - php
 
@@ -98,7 +98,7 @@
     - php
 
 - name: checkout PHP 5.6
-  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=php-5.6.16 clone=no force=yes
+  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=php-5.6.19 clone=no force=yes
   tags:
     - php
 
@@ -113,7 +113,7 @@
     - php
 
 - name: checkout PHP 5.5
-  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=php-5.5.31 clone=no force=yes
+  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=php-5.5.33 clone=no force=yes
   tags:
     - php
 
