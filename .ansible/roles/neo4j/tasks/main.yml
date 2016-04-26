@@ -17,7 +17,7 @@
     - neo4j
 
 - name: Unzip neo4j
-  unarchive: src=/home/vagrant/neo4j.tar.gz dest=/home/vagrant copy=no
+  unarchive: src=/home/vagrant/neo4j.tar.gz dest=/home/vagrant copy=no owner=vagrant
   tags:
     - neo4j
 
@@ -74,3 +74,6 @@
 
 - name: Clean neo4j-gremlin-plugin
   file: path=/home/vagrant/neo4j-gremlin-plugin state=absent
+
+- name: Create scripts directory
+  file: path=/home/vagrant/neo4j/scripts state=directory mode=0755
