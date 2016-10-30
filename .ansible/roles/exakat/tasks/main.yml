@@ -25,32 +25,32 @@
     - exakat
 
 - name: test exakat-PHP
-  lineinfile: dest=/home/vagrant/config/config.ini regexp="php          = "= line="php          = /usr/local/bin/php70"
+  lineinfile: dest=/home/vagrant/config/exakat.ini regexp="php          = "= line="php          = /usr/local/bin/php70"
   tags:
     - exakat
 
 - name: test exakat-PHP 7.1
-  lineinfile: dest=/home/vagrant/config/config.ini regexp=";php71        = /path/to/php71"= line="php71        = /usr/local/bin/php71"
+  lineinfile: dest=/home/vagrant/config/exakat.ini regexp=";php71        = /path/to/php71"= line="php71        = /usr/local/bin/php71"
   tags:
     - exakat
 
 - name: test exakat-PHP 7.0
-  lineinfile: dest=/home/vagrant/config/config.ini regexp=";php70        = /path/to/php70"= line="php70        = /usr/local/bin/php70"
+  lineinfile: dest=/home/vagrant/config/exakat.ini regexp=";php70        = /path/to/php70"= line="php70        = /usr/local/bin/php70"
   tags:
     - exakat
 
 - name: test exakat-PHP 5.6
-  lineinfile: dest=/home/vagrant/config/config.ini regexp=";php56        = /path/to/php56"= line="php56        = /usr/local/bin/php56"
+  lineinfile: dest=/home/vagrant/config/exakat.ini regexp=";php56        = /path/to/php56"= line="php56        = /usr/local/bin/php56"
   tags:
     - exakat
 
 - name: test exakat-PHP 5.5
-  lineinfile: dest=/home/vagrant/config/config.ini regexp=";php55        = /path/to/php55"= line="php55        = /usr/local/bin/php55"
+  lineinfile: dest=/home/vagrant/config/exakat.ini regexp=";php55        = /path/to/php55"= line="php55        = /usr/local/bin/php55"
   tags:
     - exakat
 
 - name: test exakat-PHP 5.6
-  lineinfile: dest=/home/vagrant/config/config.ini regexp=";php54        = /path/to/php56"= line="php54        = /usr/local/bin/php54"
+  lineinfile: dest=/home/vagrant/config/exakat.ini regexp=";php54        = /path/to/php56"= line="php54        = /usr/local/bin/php54"
   tags:
     - exakat
 
@@ -64,4 +64,4 @@
   tags:
     - exakat
 
-## Still needs to modify the config/config.ini file
+## Still needs to modify the config/exakat.ini file

@@ -75,6 +75,10 @@
 
 - name: Clean neo4j-gremlin-plugin
   file: path=/home/vagrant/neo4j-gremlin-plugin state=absent
+  tags:
+    - neo4j
 
 - name: Create scripts directory
   file: path=/home/vagrant/neo4j/scripts state=directory mode=0755
+  tags:
+    - neo4j
