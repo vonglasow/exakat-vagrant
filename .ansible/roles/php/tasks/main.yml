@@ -68,7 +68,7 @@
     - php
 
 - name: build PHP 7.1
-  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-7.1" --with-config-file-path="/usr/local/etc/php-7.1" --enable-mbstring --enable-tokenizer --with-curl=/usr --enable-phar --with-sqlite3 --enable-json --disable-all; make -j {{ ansible_processor_count * 2 }} ; make install
+  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-7.1" --with-config-file-path="/usr/local/etc/php-7.1" --enable-mbstring --enable-sysvshm --enable-tokenizer --with-curl=/usr --enable-phar --with-sqlite3 --enable-json --disable-all; make -j {{ ansible_processor_count * 2 }} ; make install
   tags:
     - php
 
@@ -83,7 +83,7 @@
     - php
 
 - name: build PHP 7.0
-  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-7.0" --with-config-file-path="/usr/local/etc/php-7.0" --enable-mbstring --enable-tokenizer  --with-curl=/usr --enable-phar --with-sqlite3 --enable-json --enable-hash --disable-all; make -j {{ ansible_processor_count * 2 }} ; make install
+  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-7.0" --with-config-file-path="/usr/local/etc/php-7.0" --enable-mbstring --enable-sysvshm --enable-tokenizer  --with-curl=/usr --enable-phar --with-sqlite3 --enable-json --enable-hash --disable-all; make -j {{ ansible_processor_count * 2 }} ; make install
   tags:
     - php
 
@@ -103,7 +103,7 @@
     - php
 
 - name: build PHP 5.6
-  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-5.6" --with-config-file-path="/usr/local/etc/php-5.6" --enable-mbstring --enable-tokenizer --with-sqlite3 --enable-json --disable-all; make -j {{ ansible_processor_count * 2 }} ; make install
+  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-5.6" --with-config-file-path="/usr/local/etc/php-5.6" --enable-mbstring --enable-sysvshm --enable-tokenizer --with-sqlite3 --enable-json --disable-all; make -j {{ ansible_processor_count * 2 }} ; make install
   tags:
     - php
 
@@ -118,7 +118,7 @@
     - php
 
 - name: build PHP 5.5
-  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-5.5" --with-config-file-path="/usr/local/etc/php-5.5" --enable-mbstring --enable-tokenizer --with-sqlite3 --enable-json --disable-all; make -j {{ ansible_processor_count * 2 }} ; make install
+  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-5.5" --with-config-file-path="/usr/local/etc/php-5.5" --enable-mbstring --enable-sysvshm --enable-tokenizer --with-sqlite3 --enable-json --disable-all; make -j {{ ansible_processor_count * 2 }} ; make install
   tags:
     - php
 
