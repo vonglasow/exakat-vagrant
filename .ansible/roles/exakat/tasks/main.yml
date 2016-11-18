@@ -1,81 +1,133 @@
 ---
-- name: add java repository
-  apt_repository: repo='deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main' state=present
-
-- name: add java src repository
-  apt_repository: repo='deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu precise main' state=present
-
-- name: add java key repository
-  apt_key: id=EEA14886 keyserver=keyserver.ubuntu.com state=present
-
-- name: Accept Java 8 Licence
-  shell: echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | tee /etc/oracle-java-8-licence-acceptance | /usr/bin/debconf-set-selections
-  args:
-    creates: /etc/oracle-java-8-licence-acceptance
-
+# tasks file for php
 - apt: update_cache=yes
-
-- name: downlad neo4j
-  get_url: url=http://dist.neo4j.org/neo4j-community-2.2.7-unix.tar.gz dest=/home/vagrant/neo4j.tar.gz mode=0750
+  tags:
+    - php
 
 # Common configurations to be run on all hosts
+# http://www.sitepoint.com/run-multiple-versions-php-one-server/
 - name: Install default packages
   apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
   with_items:
-  - silversearcher-ag
-  - tree
-  - vim
-  - git
-  - php5-cli
-  - zip
-  - wkhtmltopdf
-  - maven
-  - php5-mysqlnd
-  - sqlite
-  - gcc
-  - make
-  - libxml2-dev
-  - autoconf
-  - re2c
-  - bison
-  - screen
-  - php5-curl
-  - php5-sqlite
-  - libssl-dev
-  - libcurl4-openssl-dev
-  - pkg-config
-  - libbz2-dev
-  - libjpeg-dev
-  - libpng-dev
-  - libfreetype6-dev
-  - libgmp3-dev
-  - libldap2-dev
-  - libmcrypt-dev
-  - libmhash-dev
-  - freetds-dev
-  - libz-dev
-  - ncurses-dev
-  - libpcre3-dev
-  - libsqlite-dev
-  - libaspell-dev
-  - libreadline6-dev
-  - librecode-dev
-  - python-software-properties
-  - libxpm-dev
-  - unixodbc-dev
-  - oracle-java8-installer
-  - ca-certificates
-  - oracle-java8-set-default
-    #- libt1-dev
+    - gcc
+    - make
+    - libc-dev
+    - libtool
+    - re2c
+    - autoconf
+    - automake
+    - git
+    - curl
+    - libcurl3
+    - libcurl3-dev
+    - php5-curl
   tags:
     - apt
+    - php
 
-- name: untar neo4j
-  shell: tar -xvf /home/vagrant/neo4j.tar.gz
+- name: download file and force basic auth
+  get_url: url=http://launchpadlibrarian.net/140087283/libbison-dev_2.7.1.dfsg-1_amd64.deb dest=/opt/
+  become: yes
+  tags:
+    - php
 
-- name: move neo4j
-  shell: mv neo4j-community-2.2.7 neo4j
+- name: download file and force basic auth
+  get_url: url=http://launchpadlibrarian.net/140087282/bison_2.7.1.dfsg-1_amd64.deb dest=/opt/
+  become: yes
+  tags:
+    - php
 
-- name: clone gremlin neo4j
-  git: repo=https://github.com/thinkaurelius/neo4j-gremlin-plugin.git dest=/home/vagrant/neo4j-gremlin-plugin
+- name: Install libbison
+  apt: deb=/opt/libbison-dev_2.7.1.dfsg-1_amd64.deb
+  become: yes
+  tags:
+    - php
 
+- name: Install bison
+  apt: deb=/opt/bison_2.7.1.dfsg-1_amd64.deb
+  become: yes
+  tags:
+    - php
+
+- name: Creates directory
+  file: path={{item}} state=directory owner=vagrant group=vagrant
+  with_items:
+    - /opt/source/php-src
+  become: yes
+  tags:
+    - php
+
+- name: clone php-src
+  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=master force=yes
+  tags:
+    - php
+
+- name: checkout PHP 7.1
+  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=master clone=no force=yes
+  tags:
+    - php
+
+- name: build PHP 7.1
+  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-7.1" --with-config-file-path="/usr/local/etc/php-7.1" --enable-sysvshm --enable-mbstring --enable-tokenizer --with-curl=/usr --enable-phar --with-sqlite3 --enable-json --disable-all; make -j {{ ansible_processor_count * 2 }} ; make install
+  tags:
+    - php
+
+- name: php71 symlink
+  file: src=/usr/local/bin/php-7.1/bin/php dest=/usr/local/bin/php71 state=link
+  tags:
+    - php
+
+- name: checkout PHP 7.0
+  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=php-7.0.4 clone=no force=yes
+  tags:
+    - php
+
+- name: build PHP 7.0
+  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-7.0" --with-config-file-path="/usr/local/etc/php-7.0" --enable-sysvshm --enable-mbstring --enable-tokenizer  --with-curl=/usr --enable-phar --with-sqlite3 --enable-json --enable-hash --disable-all; make -j {{ ansible_processor_count * 2 }} ; make install
+  tags:
+    - php
+
+- name: php70 symlink
+  file: src=/usr/local/bin/php-7.0/bin/php dest=/usr/local/bin/php70 state=link
+  tags:
+    - php
+
+- name: php symlink (for running exakat)
+  file: src=/usr/local/bin/php-7.0/bin/php dest=/usr/local/bin/php state=link
+  tags:
+    - php
+
+- name: checkout PHP 5.6
+  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=php-5.6.19 clone=no force=yes
+  tags:
+    - php
+
+- name: build PHP 5.6
+  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-5.6" --with-config-file-path="/usr/local/etc/php-5.6" --enable-sysvshm --enable-mbstring --enable-tokenizer --with-sqlite3 --enable-json --disable-all; make -j {{ ansible_processor_count * 2 }} ; make install
+  tags:
+    - php
+
+- name: php 5.6 symlink
+  file: src=/usr/local/bin/php-5.6/bin/php dest=/usr/local/bin/php56 state=link
+  tags:
+    - php
+
+- name: checkout PHP 5.5
+  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=php-5.5.33 clone=no force=yes
+  tags:
+    - php
+
+- name: build PHP 5.5
+  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-5.5" --with-config-file-path="/usr/local/etc/php-5.5" --enable-sysvshm --enable-mbstring --enable-tokenizer --with-sqlite3 --enable-json --disable-all; make -j {{ ansible_processor_count * 2 }} ; make install
+  tags:
+    - php
+
+- name: php 5.5 symlink
+  file: src=/usr/local/bin/php-5.5/bin/php dest=/usr/local/bin/php55 state=link
+  tags:
+    - php
+
+- name: clean php-src
+  file: path=/opt/source/php-src state=absent
+  tags:
+    - php
