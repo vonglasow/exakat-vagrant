@@ -49,11 +49,6 @@
   tags:
     - exakat
 
-- name: test exakat-PHP 5.6
-  lineinfile: dest=/home/vagrant/config/exakat.ini regexp=";php54        = /path/to/php56"= line="php54        = /usr/local/bin/php54"
-  tags:
-    - exakat
-
 - name: stop neo4j
   shell: cd /home/vagrant/neo4j/; ./bin/neo4j stop
   tags:
