@@ -8,6 +8,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
  config.vm.define "default"
 
  config.vm.box = "debian/jessie64"
+#  config.vm.box = "parallels/debian-8.2"
 
  config.vm.hostname = "vagrant-exakat"
 
