@@ -109,7 +109,7 @@
     - php
 
 - name: checkout PHP 5.5
-  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=PHP-5.5.38 clone=no force=yes
+  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=PHP-5.5.35 clone=no force=yes
   tags:
     - php
 

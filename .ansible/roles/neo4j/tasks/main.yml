@@ -11,6 +11,10 @@
 - name: Clean neo4j
   file: path=/home/vagrant/neo4j state=absent
 
+- name: update ulimit to 40000
+  lineinfile: dest=/etc/security/limits.conf  line="neo4j   soft    nofile  40000"
+  lineinfile: dest=/etc/security/limits.conf  line="neo4j   hard    nofile  40000"
+
 - name: Downlad neo4j 2.3.7
   get_url: url=http://dist.neo4j.org/neo4j-community-2.3.7-unix.tar.gz dest=/home/vagrant/neo4j.tar.gz mode=0750
   tags:
@@ -79,6 +83,11 @@
     - neo4j
 
 - name: Create scripts directory
-  file: path=/home/vagrant/neo4j/scripts state=directory mode=0755
+  file: path=/home/vagrant/neo4j/scripts state=directory mode=0755 owner=vagrant
+  tags:
+    - neo4j
+
+- name: Give neo4j to vagrant
+  file: path=/home/vagrant/neo4j state=directory mode=0755 owner=vagrant recurse=yes
   tags:
     - neo4j
