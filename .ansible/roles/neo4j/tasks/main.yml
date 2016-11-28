@@ -11,8 +11,12 @@
 - name: Clean neo4j
   file: path=/home/vagrant/neo4j state=absent
 
-- name: Downlad neo4j 2.3.5
-  get_url: url=http://dist.neo4j.org/neo4j-community-2.3.5-unix.tar.gz dest=/home/vagrant/neo4j.tar.gz mode=0750
+- name: update ulimit to 40000
+  lineinfile: dest=/etc/security/limits.conf  line="neo4j   soft    nofile  40000"
+  lineinfile: dest=/etc/security/limits.conf  line="neo4j   hard    nofile  40000"
+
+- name: Downlad neo4j 2.3.7
+  get_url: url=http://dist.neo4j.org/neo4j-community-2.3.7-unix.tar.gz dest=/home/vagrant/neo4j.tar.gz mode=0750
   tags:
     - neo4j
 
@@ -22,7 +26,7 @@
     - neo4j
 
 - name: Rename neo4j distribution to neo4j
-  shell: mv /home/vagrant/neo4j-community-2.3.5 /home/vagrant/neo4j
+  shell: mv /home/vagrant/neo4j-community-2.3.7 /home/vagrant/neo4j
   tags:
     - neo4j
 
@@ -34,7 +38,7 @@
   tags:
     - neo4j
 
-- name: Configure neo4j for gremlin 2.0
+- name: Configure neo4j for gremlin 3.0
   lineinfile: dest=/home/vagrant/neo4j/conf/neo4j-server.properties regexp="^#org.neo4j.server.thirdparty_jaxrs_classes=org.neo4j.examples.server.unmanaged=/examples/unmanaged" insertafter="^#org.neo4j.server.thirdparty_jaxrs_classes=org.neo4j.examples.server.unmanaged=/examples/unmanaged" line="org.neo4j.server.thirdparty_jaxrs_classes=com.thinkaurelius.neo4j.plugins=/tp\n"
   tags:
     - neo4j
@@ -57,7 +61,7 @@
 
   lineinfile: dest=/home/vagrant/neo4j-gremlin-plugin/tinkerpop3/pom.xml regexp="        <tinkerpop-version>3.1.0-incubating</tinkerpop-version>" line="        <tinkerpop-version>3.2.0-incubating</tinkerpop-version>"
 
-- name: Build gremlin 2.0
+- name: Build gremlin 3.0
   shell: cd /home/vagrant/neo4j-gremlin-plugin; mvn clean package -Dtp.version=3
   tags:
     - neo4j
@@ -79,6 +83,11 @@
     - neo4j
 
 - name: Create scripts directory
-  file: path=/home/vagrant/neo4j/scripts state=directory mode=0755
+  file: path=/home/vagrant/neo4j/scripts state=directory mode=0755 owner=vagrant
+  tags:
+    - neo4j
+
+- name: Give neo4j to vagrant
+  file: path=/home/vagrant/neo4j state=directory mode=0755 owner=vagrant recurse=yes
   tags:
     - neo4j
