@@ -56,13 +56,13 @@
 - name: Add sonatype repository to pom.xml
   lineinfile: dest=/home/vagrant/neo4j-gremlin-plugin/pom.xml regexp="    </contributors>" line="    </contributors>\n  \n  <repositories>\n   <repository>\n     <id>snapshots-repo</id>\n     <url>https://oss.sonatype.org/content/repositories/snapshots</url>\n     <releases><enabled>false</enabled></releases>\n     <snapshots><enabled>true</enabled></snapshots>\n   </repository>\n </repositories>\n"
 
-  - name: Adapt gremlin compilation
-    lineinfile: dest={{ item.dest }} regexp={{ item.regexp }} line={{ item.line }}
-    with_items:
-      - {dest: "/opt/exakat/neo4j-gremlin-plugin/pom.xml", regexp: "    <version>2.3.1</version>", line: "    <version>2.3.5</version>"}
-      - {dest: "/opt/exakat/neo4j-gremlin-plugin/tinkerpop2/pom.xml", regexp: "        <version>2.3.1</version>", line: "        <version>2.3.5</version>"}
-      - {dest: "/opt/exakat/neo4j-gremlin-plugin/tinkerpop3/pom.xml", regexp: "        <version>2.3.1</version>", line: "        <version>2.3.5</version>"}
-      - {dest: "/opt/exakat/neo4j-gremlin-plugin/tinkerpop3/pom.xml", regexp: "        <tinkerpop-version>3.1.0-incubating</tinkerpop-version>", line: "        <tinkerpop-version>3.2.0-incubating</tinkerpop-version>"}
+- name: Adapt gremlin compilation
+  lineinfile: dest={{ item.dest }} regexp={{ item.regexp }} line={{ item.line }}
+  with_items:
+    - {dest: "/opt/exakat/neo4j-gremlin-plugin/pom.xml", regexp: "<version>2.3.1</version>", line: "<version>2.3.5</version>"}
+    - {dest: "/opt/exakat/neo4j-gremlin-plugin/tinkerpop2/pom.xml", regexp: "<version>2.3.1</version>", line: "<version>2.3.5</version>"}
+    - {dest: "/opt/exakat/neo4j-gremlin-plugin/tinkerpop3/pom.xml", regexp: "<version>2.3.1</version>", line: "<version>2.3.5</version>"}
+    - {dest: "/opt/exakat/neo4j-gremlin-plugin/tinkerpop3/pom.xml", regexp: "<tinkerpop-version>3.1.0-incubating</tinkerpop-version>", line: "<tinkerpop-version>3.2.0-incubating</tinkerpop-version>"}
 
 - name: Build gremlin 3.0
   shell: cd /home/vagrant/neo4j-gremlin-plugin; mvn clean package -Dtp.version=3
