@@ -62,7 +62,7 @@
   lineinfile: dest=/home/vagrant/neo4j-gremlin-plugin/tinkerpop3/pom.xml regexp="        <tinkerpop-version>3.1.0-incubating</tinkerpop-version>" line="        <tinkerpop-version>3.2.0-incubating</tinkerpop-version>"
 
 - name: Build gremlin 3.0
-  shell: cd /home/vagrant/neo4j-gremlin-plugin; mvn clean package -Dtp.version=3
+  shell: cd /home/vagrant/neo4j-gremlin-plugin; mvn -T 2C clean package -Dtp.version=3
   tags:
     - neo4j
 
