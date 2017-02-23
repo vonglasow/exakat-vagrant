@@ -1,9 +1,4 @@
 ---
-# tasks file for php
-- apt: update_cache=yes
-  tags:
-    - php
-
 # Common configurations to be run on all hosts
 # http://www.sitepoint.com/run-multiple-versions-php-one-server/
 - name: Install default packages
@@ -21,34 +16,11 @@
     - libcurl3
     - libcurl3-dev
     - php5-curl
-    - tar
   tags:
     - apt
     - php
 
-- name: download file and force basic auth
-  get_url: url=http://launchpadlibrarian.net/140087283/libbison-dev_2.7.1.dfsg-1_amd64.deb dest=/opt/
-  become: yes
-  tags:
-    - php
-
-- name: download file and force basic auth
-  get_url: url=http://launchpadlibrarian.net/140087282/bison_2.7.1.dfsg-1_amd64.deb dest=/opt/
-  become: yes
-  tags:
-    - php
-
-- name: Install libbison
-  apt: deb=/opt/libbison-dev_2.7.1.dfsg-1_amd64.deb
-  become: yes
-  tags:
-    - php
-
-- name: Install bison
-  apt: deb=/opt/bison_2.7.1.dfsg-1_amd64.deb
-  become: yes
-  tags:
-    - php
+- include: include_bison
 
 - name: Creates directory
   file: path={{item}} state=directory owner=vagrant group=vagrant
@@ -58,72 +30,18 @@
   tags:
     - php
 
-## Install PHP 7.0 from tarball, for compatibility
-- name: download PHP 7.0.13
-  unarchive: src=http://nl1.php.net/get/php-7.0.13.tar.bz2/from/this/mirror dest=/opt/source remote_src=yes
-
-- name: build PHP 7.0
-  shell: cd /opt/source/php-7.0.13; ./configure --prefix="/usr/local/bin/php-7.0" --with-config-file-path="/usr/local/etc/php-7.0" --enable-mbstring --enable-sysvsem --enable-tokenizer  --with-curl=/usr --enable-phar --with-sqlite3 --enable-json --enable-hash --disable-all; make -j {{ ansible_processor_count * 2 }} ; make install; make clean
+- name: clone php-src
+  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=master force=yes
   tags:
     - php
 
-- name: php70 symlink
-  file: src=/usr/local/bin/php-7.0/bin/php dest=/usr/local/bin/php70 state=link
-  tags:
-    - php
-
-- name: php symlink (for running exakat)
-  file: src=/usr/local/bin/php-7.0/bin/php dest=/usr/local/bin/php state=link
-  tags:
-    - php
-
-## Install PHP 7.1, 5.6, 5.6 from github
-- name: clone php-src and get PHP 7.1
-  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=PHP-7.1.0RC3 force=yes
-  tags:
-    - php
-
-- name: build PHP 7.1
-  shell: cd /opt/source/php-src; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-7.1" --with-config-file-path="/usr/local/etc/php-7.1" --enable-mbstring --enable-sysvsem --enable-tokenizer --with-curl=/usr --enable-phar --with-sqlite3 --enable-json --disable-all; make -j {{ ansible_processor_count * 2 }} ; make install; make clean
-  tags:
-    - php
-
-- name: php71 symlink
-  file: src=/usr/local/bin/php-7.1/bin/php dest=/usr/local/bin/php71 state=link
-  tags:
-    - php
-
-- name: checkout PHP 5.6
-  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=PHP-5.6.28 clone=no force=yes
-  tags:
-    - php
-
-- name: build PHP 5.6
-  shell: cd /opt/source/php-src; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-5.6" --with-config-file-path="/usr/local/etc/php-5.6" --enable-mbstring --enable-sysvsem --enable-tokenizer --with-sqlite3 --enable-json --disable-all; make -j {{ ansible_processor_count * 2 }} ; make install; make clean
-  tags:
-    - php
-
-- name: php 5.6 symlink
-  file: src=/usr/local/bin/php-5.6/bin/php dest=/usr/local/bin/php56 state=link
-  tags:
-    - php
-
-- name: checkout PHP 5.5
-  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=PHP-5.5.35 clone=no force=yes
-  tags:
-    - php
-
-- name: build PHP 5.5
-  shell: cd /opt/source/php-src; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-5.5" --with-config-file-path="/usr/local/etc/php-5.5" --enable-mbstring --enable-sysvsem --enable-tokenizer --with-sqlite3 --enable-json --disable-all; make -j {{ ansible_processor_count * 2 }} ; make install; make clean
-  tags:
-    - php
-
-- name: php 5.5 symlink
-  file: src=/usr/local/bin/php-5.5/bin/php dest=/usr/local/bin/php55 state=link
-  tags:
-    - php
+- include: include_php72
+- include: include_php71
+- include: include_php70
+- include: include_php56
 
 - name: clean php-src
   file: path=/opt/source/php-src state=absent
   tags:
     - php
+

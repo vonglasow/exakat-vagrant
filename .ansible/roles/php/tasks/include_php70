@@ -1,0 +1,28 @@
+---
+- name: checkout PHP 7.0
+  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=php-7.0.15 clone=no force=yes
+  tags:
+    - php
+
+- name: build PHP 7.0
+  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-7.0" --with-config-file-path="/usr/local/etc/php-7.0" --enable-mbstring --enable-tokenizer  --with-curl=/usr --enable-phar --with-sqlite3 --enable-json --enable-hash --disable-all; make -j {{ ansible_processor_count * 2 }} ; make install
+  tags:
+    - php
+
+- name: php70 config
+  file:
+    path: /usr/local/etc/php-7.0/
+    state: directory
+    mode: 0755
+
+- name: php70 config memory_limit
+  lineinfile:
+    dest: /usr/local/etc/php-7.0/php.ini
+    line: 'memory_limit = -1'
+    state: present
+    create: yes
+
+- name: php symlink (for running exakat)
+  file: src=/usr/local/bin/php-7.0/bin/php dest=/usr/local/bin/php state=link
+  tags:
+    - php
