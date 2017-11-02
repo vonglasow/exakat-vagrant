@@ -4,11 +4,6 @@
   tags:
     - exakat
 
-- name: clean database
-  shell: cd /home/vagrant/; php exakat.phar cleandb 
-  tags:
-    - exakat
-
 - name: run doctor 
   shell: cd /home/vagrant/; php exakat.phar doctor
   tags:
@@ -25,7 +20,7 @@
     - exakat
 
 - name: test exakat-PHP
-  lineinfile: dest=/home/vagrant/config/exakat.ini regexp="php          = "= line="php          = /usr/local/bin/php71"
+  lineinfile: dest=/home/vagrant/config/exakat.ini regexp="php          = "= line="php          = /usr/local/bin/php"
   tags:
     - exakat
 
@@ -40,7 +35,7 @@
     - exakat
 
 - name: test exakat-PHP 7.0
-  lineinfile: dest=/home/vagrant/config/exakat.ini regexp=";php70        = /path/to/php70"= line="php70        = /usr/local/bin/php70"
+  lineinfile: dest=/home/vagrant/config/exakat.ini regexp=";php70        = /path/to/php70"= line="php        = /usr/local/bin/php70"
   tags:
     - exakat
 
@@ -49,12 +44,7 @@
   tags:
     - exakat
 
-- name: stop neo4j
-  shell: cd /home/vagrant/neo4j/; ./bin/neo4j stop
-  tags:
-    - exakat
-
-- name: control over neo4j
+- name: control over the whole folder
   file: path=/home/vagrant/ recurse=yes owner=vagrant
   tags:
     - exakat
