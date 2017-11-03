@@ -2,7 +2,6 @@
 # vi: set ft=ruby :
 
 VAGRANTFILE_API_VERSION = "2"
-
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define "default"
@@ -30,9 +29,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.network "forwarded_port", guest: 7447, host: 7447
 
-# config.vm.provision "ansible_local" do |ansible|
-  config.vm.provision :ansible do |ansible|
+  config.vm.provision :ansible_local do |ansible|
     ansible.verbose = "vvvv"
+    ansible.install_mode = "pip"
     ansible.raw_arguments = ['--timeout=300']
     ansible.become = true
     ansible.playbook = ".ansible/exakat.yml"
