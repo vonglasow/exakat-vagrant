@@ -14,8 +14,8 @@
   tags:
     - gremlin
 
-- name: Downlad gremlin 3.2.8
-  get_url: url=http://ftp.tudelft.nl/apache/tinkerpop/3.2.8/apache-tinkerpop-gremlin-server-3.2.8-bin.zip dest=/home/vagrant/tinkergraph.zip mode=0750
+- name: Downlad gremlin 3.2.9
+  get_url: url=http://ftp.tudelft.nl/apache/tinkerpop/3.2.9/apache-tinkerpop-gremlin-server-3.2.9-bin.zip dest=/home/vagrant/tinkergraph.zip mode=0750
   tags:
     - gremlin
 
@@ -25,7 +25,7 @@
     - gremlin
 
 - name: Rename distribution to tinkergraph
-  shell: mv /home/vagrant/apache-tinkerpop-gremlin-server-3.2.8 /home/vagrant/tinkergraph
+  shell: mv /home/vagrant/apache-tinkerpop-gremlin-server-3.2.9 /home/vagrant/tinkergraph
   tags:
     - gremlin
 
@@ -35,7 +35,7 @@
     - gremlin
 
 - name: Install neo4j
-  shell: cd /home/vagrant/tinkergraph; bin/gremlin-server.sh -i org.apache.tinkerpop neo4j-gremlin 3.2.8
+  shell: cd /home/vagrant/tinkergraph; bin/gremlin-server.sh -i org.apache.tinkerpop neo4j-gremlin 3.2.9
   tags:
     - gremlin
 
