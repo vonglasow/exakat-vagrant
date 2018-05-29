@@ -32,6 +32,8 @@ This box is sized to handle projects up to 100k LOC of PHP. Larger projects do r
 
 The ansible playbook may be used independantly to install exakat only : see role ['exakat'](https://github.com/exakat/exakat-vagrant/blob/master/.ansible/roles/exakat/tasks/main.yml).
 
+Put your projects of exakat inside ./projects, this folder will be automatically shared with the VM so you can execute exakat from inside the machine on your stuff.
+
 Author
 ------
 

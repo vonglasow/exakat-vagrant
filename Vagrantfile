@@ -7,6 +7,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define "default"
   config.vm.provider "virtualbox"
+  vagrant_dir = File.expand_path(File.dirname(__FILE__))
+  config.vm.synced_folder "#{vagrant_dir}/projects", "/home/vagrant/projects"
 
   if OS.mac? then
     ## Tested and works (2017-02), --provider=virtualbox (5.0 max)
