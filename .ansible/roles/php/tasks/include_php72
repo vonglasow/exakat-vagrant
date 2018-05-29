@@ -10,7 +10,7 @@
     - php
 
 - name: build PHP 7.2
-  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-7.2" --with-config-file-path="/usr/local/etc/php-7.1" --enable-mbstring --enable-tokenizer --with-curl=/usr --enable-phar --with-sqlite3 --enable-json --disable-all; make -j {{ ansible_processor_count * 2 }} ; make install
+  shell: cd /opt/source/php-src; make clean; ./buildconf --force; ./configure --prefix="/usr/local/bin/php-7.2" --with-config-file-path="/usr/local/etc/php-7.2" --enable-mbstring --enable-tokenizer --with-curl=/usr --enable-phar --with-sqlite3 --enable-json --disable-all; make -j {{ ansible_processor_count * 2 }} ; make install
   tags:
     - php
 
