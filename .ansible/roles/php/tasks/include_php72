@@ -1,6 +1,6 @@
 ---
 - name: clone php-src
-  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=php-7.2.0alpha3 force=yes
+  git: repo=https://github.com/php/php-src.git dest=/opt/source/php-src version=php-7.2.6 force=yes
   tags:
     - php
 
