@@ -6,7 +6,7 @@ Builds a vagrant with [exakat](http://www.exakat.io/) and all dependencies insta
 How do I use it?
 ----------------
 
-Make sure you have all pre-requisite
+Make sure you have all pre-requisite in your host machine:
 
 * Ansible
 * Vagrant
