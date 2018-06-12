@@ -34,8 +34,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :ansible do |ansible|
     ansible.verbose = "vvvv"
     ansible.raw_arguments = ['--timeout=300']
-    ansible.became = true
+    ansible.become = true
     ansible.playbook = ".ansible/exakat.yml"
+    ansible.version = "latest"
   end
 
   config.vm.post_up_message = "    Welcome to Exakat !"
