@@ -40,7 +40,7 @@
     - exakat
 
 - name: test exakat-PHP 7.0
-  lineinfile: dest=/home/vagrant/config/exakat.ini regexp="^;php70 =" line="php70 = /usr/local/bin/php70"
+  lineinfile: dest=/home/vagrant/config/exakat.ini regexp="^;php70 =" line="php70 = /usr/local/bin/php"
   tags:
     - exakat
 
